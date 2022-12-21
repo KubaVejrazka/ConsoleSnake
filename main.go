@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
 	"time"
 
 	"github.com/eiannone/keyboard"
@@ -26,6 +27,10 @@ func listener() {
 
 		if string(char) == "w" || string(char) == "a" || string(char) == "s" || string(char) == "d" {
 			key = string(char)
+		}
+
+		if string(char) == "q" && !alive {
+			os.Exit(0)
 		}
 	}
 }
@@ -67,6 +72,7 @@ func show() {
 }
 
 func main() {
+
 	go listener()
 	rand.Seed(time.Now().UnixNano())
 
@@ -201,7 +207,19 @@ func main() {
 		lastKey = key
 		show()
 
-		fmt.Println("SCORE: ", len(tail))
+		fmt.Println("SCORE:", len(tail))
 		time.Sleep(time.Millisecond * time.Duration(loopSpeed))
+	}
+
+	for i := 0; i < 10; i++ {
+		fmt.Println()
+	}
+
+	fmt.Println("You lost! Your final score is", len(tail), "point(s).")
+	fmt.Println("Press Q to exit...")
+	fmt.Println()
+
+	for {
+		time.Sleep(time.Second)
 	}
 }
