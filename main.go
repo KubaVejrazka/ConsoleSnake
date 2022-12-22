@@ -188,18 +188,25 @@ func main() {
 		}
 
 		if eaten {
-			var rR int = rand.Intn(15)
-			var rC int = rand.Intn(15)
 
-			for arr[rR][rC] != 0 {
-				rR = rand.Intn(15)
-				rC = rand.Intn(15)
+			var zeros [][2]int
+			var newZero [2]int
+
+			for row := 0; row < len(arr); row++ {
+				for col := 0; col < len(arr[0]); col++ {
+					if arr[row][col] == 0 {
+						newZero[0] = row
+						newZero[1] = col
+						zeros = append(zeros, newZero)
+					}
+				}
 			}
 
-			arr[rR][rC] = 3
+			var r int = rand.Intn(len(zeros) - 1)
+			arr[zeros[r][0]][zeros[r][1]] = 3
 
-			food[0] = rR
-			food[1] = rC
+			food[0] = zeros[r][0]
+			food[1] = zeros[r][1]
 
 			eaten = false
 		}
