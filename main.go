@@ -9,7 +9,7 @@ import (
 	"github.com/eiannone/keyboard"
 )
 
-var arr = [15][15]int{}
+var arr = [20][30]int{}
 var alive bool = true
 var loopSpeed int = 200 //ms
 var key string = ""
@@ -38,7 +38,7 @@ func listener() {
 func show() {
 	// visualisation
 	fmt.Print("  ")
-	for i := 0; i < len(arr); i++ {
+	for i := 0; i < len(arr[0]); i++ {
 		fmt.Print("_ ")
 	}
 	fmt.Println()
@@ -65,7 +65,7 @@ func show() {
 	}
 
 	fmt.Print("  ")
-	for i := 0; i < len(arr); i++ {
+	for i := 0; i < len(arr[0]); i++ {
 		fmt.Print("¯ ")
 	}
 	fmt.Println()
@@ -76,7 +76,7 @@ func main() {
 	go listener()
 	rand.Seed(time.Now().UnixNano())
 
-	arr[7][7] = 1
+	arr[len(arr)/2][len(arr[0])/2] = 1
 	for alive {
 
 		for i := 0; i < 10; i++ {
@@ -121,7 +121,7 @@ func main() {
 						}
 
 					case "s":
-						if !(row+1 == 15) && arr[row+1][col] != 2 {
+						if !(row+1 == len(arr)) && arr[row+1][col] != 2 {
 							arr[row][col] = 0
 							arr[row+1][col] = 1
 							found = true
@@ -130,7 +130,7 @@ func main() {
 						}
 
 					case "d":
-						if !(col+1 == 15) && arr[row][col+1] != 2 {
+						if !(col+1 == len(arr[0])) && arr[row][col+1] != 2 {
 							arr[row][col] = 0
 							arr[row][col+1] = 1
 							found = true
