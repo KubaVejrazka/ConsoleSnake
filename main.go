@@ -225,7 +225,7 @@ func main() {
 				}
 			}
 
-			var r int = rand.Intn(len(zeros) - 1)
+			var r int = rand.Intn(len(zeros))
 			arr[zeros[r][0]][zeros[r][1]] = 3
 
 			food[0] = zeros[r][0]
