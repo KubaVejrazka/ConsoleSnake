@@ -200,14 +200,17 @@ func main() {
 			tail[0][1] = head[1]
 		}
 
-		for row := 0; row < len(arr); row++ {
-			for col := 0; col < len(arr[0]); col++ {
-				for i := 0; i < len(tail); i++ {
-					if tail[i][0] == row && tail[i][1] == col {
-						arr[row][col] = 2
-					}
-				}
-			}
+		// for row := 0; row < len(arr); row++ {
+		// 	for col := 0; col < len(arr[0]); col++ {
+		// 		for i := 0; i < len(tail); i++ {
+		// 			if tail[i][0] == row && tail[i][1] == col {
+		// 				arr[row][col] = 2
+		// 			}
+		// 		}
+		// 	}
+
+		for i := 0; i < len(tail); i++ {
+			arr[tail[i][0]][tail[i][1]] = 2
 		}
 
 		if eaten {
