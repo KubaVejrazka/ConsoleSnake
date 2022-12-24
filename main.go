@@ -11,7 +11,7 @@ import (
 	"github.com/eiannone/keyboard"
 )
 
-var arr = [20][30]int{}
+var arr = [15][20]int{}
 var alive bool = true
 var loopSpeed int = 200 //ms
 var key string = ""
