@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/eiannone/keyboard"
@@ -17,6 +19,7 @@ var lastKey string = ""
 var eaten bool = true
 var food [2]int
 var tail [][2]int
+var pb int = 0
 
 func listener() {
 	for {
@@ -37,11 +40,11 @@ func listener() {
 
 func show() {
 	// visualisation
-	fmt.Print("  ")
-	for i := 0; i < len(arr[0]); i++ {
+	fmt.Print(" _")
+	for i := 0; i < len(arr[0])-1; i++ {
 		fmt.Print("_ ")
 	}
-	fmt.Println()
+	fmt.Println("__  ")
 
 	for row := 0; row < len(arr); row++ {
 		fmt.Print("| ")
@@ -64,17 +67,37 @@ func show() {
 		fmt.Println()
 	}
 
-	fmt.Print("  ")
-	for i := 0; i < len(arr[0]); i++ {
+	fmt.Print(" ¯")
+	for i := 0; i < len(arr[0])-1; i++ {
 		fmt.Print("¯ ")
 	}
-	fmt.Println()
+	fmt.Println("¯¯  ")
 }
 
 func main() {
 
 	go listener()
 	rand.Seed(time.Now().UnixNano())
+
+	if _, err := os.Stat("./.highscore"); err != nil {
+		f, err := os.Create("./.highscore")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		_, err = f.WriteString("0")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		f.Close()
+	}
+
+	highscore, err := os.OpenFile("./.highscore", os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer highscore.Close()
 
 	arr[len(arr)/2][len(arr[0])/2] = 1
 	for alive {
@@ -214,7 +237,35 @@ func main() {
 		lastKey = key
 		show()
 
-		fmt.Println("SCORE:", len(tail))
+		pbB, err := os.ReadFile(highscore.Name())
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		pb, err = strconv.Atoi(string(pbB))
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		if len(tail) > pb {
+			os.Truncate(highscore.Name(), 0)
+			_, err = highscore.WriteString(fmt.Sprint(len(tail)))
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			pb = len(tail)
+		}
+
+		var scoreS string = ("SCORE: " + fmt.Sprint(len(tail)))
+		var pbS string = ("HIGHSCORE: " + fmt.Sprint(pb))
+		fmt.Print("  ", scoreS)
+
+		for i := 1; i < (2*len(arr[0]))-(len(scoreS)+len(pbS)); i++ {
+			fmt.Print(" ")
+		}
+
+		fmt.Println(pbS)
 		time.Sleep(time.Millisecond * time.Duration(loopSpeed))
 	}
 
