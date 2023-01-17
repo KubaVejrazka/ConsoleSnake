@@ -14,6 +14,8 @@ import (
 var key string = ""
 var lastKey string = ""
 var alive bool = true
+
+var score int = 0
 var pb int = 0
 
 var arr = [13][13]int{}
@@ -237,7 +239,7 @@ func die() {
 		fmt.Println()
 	}
 
-	fmt.Println("You lost! Your final score is", pb, "point(s).")
+	fmt.Println("You lost! Your final score is", score, "point(s).")
 	fmt.Println("Press Q to exit.")
 
 	for key != "q" {
@@ -325,6 +327,7 @@ func main() {
 			tail = moveTail(tail, head)
 		}
 
+		score = len(tail)
 		printTail(tail)
 		show()
 
