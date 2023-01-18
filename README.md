@@ -1,6 +1,6 @@
 # ConsoleSnake
 ## A console version of the snake game, written in Go :)
-To play the game, you need to download the executable (snake_linux for Linux, snake_windows.exe for Windows) and run it.
+To play the game, you need to download the executable (snake_linux) and run it. Unfortunately I wasn't able to get it to run on Windows, so it's Linux only (at least for now :) )
 
 ![alt text](https://github.com/KubaVejrazka/ConsoleSnake/blob/37916df657f5d4612eccc23a09e5a8c48ab15227/image.png)
 
